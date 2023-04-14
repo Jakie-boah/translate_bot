@@ -21,10 +21,10 @@ class Control:
         if self.chat_id == -970406949:
             self.language_1 = 'English'
             self.language_2 = 'Arabic'
-            await bot.send_message(-826578431, self._translate()[0])
+            await bot.send_message(-793597146, self._translate()[0])
             await bot.send_message(-807639216, self._translate()[1])
 
-        elif self.chat_id == -826578431:
+        elif self.chat_id == -793597146:
             self.language_1 = 'Russian'
             self.language_2 = 'Arabic'
             await bot.send_message(-970406949, self._translate()[0])
@@ -34,7 +34,7 @@ class Control:
             self.language_1 = 'Russian'
             self.language_2 = 'English'
             await bot.send_message(-970406949, self._translate()[0])
-            await bot.send_message(-826578431, self._translate()[1])
+            await bot.send_message(-793597146, self._translate()[1])
 
     def _translate(self):
         response = translate(self.language_1, self.language_2, self.message)['choices'][0]['text'].split('\n')
