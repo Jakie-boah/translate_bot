@@ -20,7 +20,7 @@ class Control:
     async def set_languages_and_send_message(self):
 
         translate_dict = {
-            #1: 'Russian',
+            6617: 'Russian',
             6016: 'English',
             6017: 'Arabic'
         }
