@@ -29,6 +29,23 @@ class Control:
 
         for i in translate_dict.keys():
             await bot.send_message(self.chat_id, text=self._translate(translate_dict[i]), message_thread_id=i)
+        if self.chat_id == -970406949:
+            self.language_1 = 'English'
+            self.language_2 = 'Arabic'
+            await bot.send_message(-793597146, self._translate()[0])
+            await bot.send_message(-807639216, self._translate()[1])
+
+        elif self.chat_id == -793597146:
+            self.language_1 = 'Russian'
+            self.language_2 = 'Arabic'
+            await bot.send_message(-970406949, self._translate()[0])
+            await bot.send_message(-807639216, self._translate()[1])
+
+        elif self.chat_id == -807639216:
+            self.language_1 = 'Russian'
+            self.language_2 = 'English'
+            await bot.send_message(-970406949, self._translate()[0])
+            await bot.send_message(-793597146, self._translate()[1])
 
 
     def _translate(self, language):
