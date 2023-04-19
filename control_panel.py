@@ -68,7 +68,8 @@ class Control:
         try:
             await bot.delete_message(self.chat_id, self.message.message_id)
             await bot.send_message(self.message.chat.id,
-                                   text='Message cannot be sent in general chat - please, send it in specific topic')
+                                   text='Message cannot be sent in general chat\n'
+                                        'Please, choose your language chat below')
 
         except MessageCantBeDeleted:
             logger.error('Бот не может удалять сообщения. Возможно у него нет админовской привилегии на это')
