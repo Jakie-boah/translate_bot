@@ -8,6 +8,9 @@ from loguru import logger
 async def start(message: Message):
 
     control = Control(message)
+    logger.info(message)
+    if message.from_user.id in Control.friends_bots:
+        await control.control_proper_lan()
 
     if message.reply_to_message and control.check_if_reply_on_tr_msg():
         await control.reply_on_message()

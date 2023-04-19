@@ -13,6 +13,7 @@ class Control:
     As input parameter takes only message in its row view
     """
     bot_id = 6122243229
+    friends_bots = [6211497478, 5713353769, 6196996810, 5704316497]
 
     def __init__(self, message):
         self.message = message
@@ -53,7 +54,6 @@ class Control:
         response = translate(language, self.message.text)['choices'][0]['text'].split('\n')
         logger.info(response)
 
-        response.pop(0)
         translated_message = f'<b>{self.message.from_user.first_name}</b>\n'
         for i in response:
             translated_message += i
@@ -66,7 +66,7 @@ class Control:
     async def delete_message(self):
 
         try:
-            await bot.delete_message(self.message.chat.id, self.message.message_id)
+            await bot.delete_message(self.chat_id, self.message.message_id)
             await bot.send_message(self.message.chat.id,
                                    text='Message cannot be sent in general chat - please, send it in specific topic')
 
@@ -83,17 +83,42 @@ class Control:
                 url = self.message['reply_to_message']['entities'][1]['url']
             except IndexError:
                 url = self.message['reply_to_message']['entities'][0]['url']
-
+            translate_dict = {
+                6617: 'Russian',
+                6016: 'English',
+                6017: 'Arabic'
+            }
             m_id_topic = url.split('/')[-1]
             message_id = int(m_id_topic.split('?')[0])
             parsed_url = urlparse(url)
             topic_id = int(parse_qs(parsed_url.query)['topic'][0])
-            url = hlink(f'Original', self.message.url)
-            self.message.text += '\n' + url
+            language = translate_dict[topic_id]
+            original_lan = translate_dict[self.message.message_thread_id]
+
             await bot.send_message(self.message.chat.id,
-                                   text=f"message from: {self.message.from_user.first_name}\n{self.message.text}",
+                                   text=f"{self._translate(language, original_lan)}",
                                    reply_to_message_id=message_id, message_thread_id=topic_id,
                                    disable_web_page_preview=True)
+
+    async def control_proper_lan(self):
+        translate_dict = {
+            6617: 'Russian',
+            6016: 'English',
+            6017: 'Arabic'
+        }
+        lang = translate_dict[self.message.message_thread_id]
+        response = translate(lang, self.message.text)['choices'][0]['text'].split('\n')
+        translated_message = ''
+        for i in response:
+            translated_message += i
+
+        await bot.delete_message(self.chat_id, self.message.message_id)
+        await bot.send_message(self.message.chat.id,
+                               text=translated_message,
+                               message_thread_id=self.message.message_thread_id)
+
+
+
 
 
 
