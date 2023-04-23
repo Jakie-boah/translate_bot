@@ -1,4 +1,3 @@
-
 from aiogram import Bot, Dispatcher
 import asyncio
 import os

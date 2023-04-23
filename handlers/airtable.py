@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import os
 from pyairtable import Table
 from pyairtable.formulas import match
-
 load_dotenv()
 
 
@@ -28,14 +27,24 @@ class AirtableParser:
 
     @staticmethod
     def _parse_themes(row):
+
+        AirtableParser.validate_on_themes(row)
         themes = row['fields']['Themes']
         theme_field = themes.split(', ')
         translate_dict = {}
         for lan_con in theme_field:
             lan_row = lan_con.split('-')
-            translate_dict[lan_row[1]] = lan_row[0]
+            translate_dict[int(lan_row[1])] = lan_row[0]
 
         return translate_dict
 
-
-# a = (AirtableParser(-1001728616773).get_dict())
+    @staticmethod
+    def validate_on_themes(row):
+        try:
+            row['fields']['Themes']
+        except KeyError:
+            raise KeyError('Клетка Themes не заполнена')
+#
+#
+a = (AirtableParser(-1001728616773).get_dict())
+print(a)
