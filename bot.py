@@ -1,7 +1,8 @@
-from config import dp, bot
+from config import dp
 from aiogram.types import Message
-from control_panel import Control
+from handlers.control_panel import Control
 from loguru import logger
+from filters.filter import user_is_admin
 
 
 @dp.message_handler()
@@ -16,9 +17,8 @@ async def start(message: Message):
         await control.reply_on_message()
 
     if not message.is_topic_message:
-        member = await bot.get_chat_member(message.chat.id, message.from_user.id)
 
-        if not member.is_chat_admin():
+        if not await user_is_admin(message):
             await control.delete_message()
 
     if message.is_topic_message and not control.check_if_reply_on_tr_msg():

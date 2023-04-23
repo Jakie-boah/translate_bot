@@ -1,4 +1,4 @@
-from test import translate
+from translate import translate
 from config import bot
 from loguru import logger
 from aiogram.utils.markdown import hlink
@@ -31,9 +31,9 @@ class Control:
     async def translate_and_send_message(self):
 
         translate_dict = {
-            6617: 'Russian',
-            6016: 'English',
-            6017: 'Arabic'
+            6617: 'RU',
+            6016: 'EN',
+            6017: 'AR'
         }
         # translate_dict = {
         #     2: 'Russian',
