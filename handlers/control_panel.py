@@ -19,7 +19,7 @@ class Control:
         self.message = message
         self.chat_id = message.chat.id
         self._url = message.url
-        self.translate_dict = -1001728616773
+        self.translate_dict = self.chat_id
 
     @property
     def translate_dict(self):
