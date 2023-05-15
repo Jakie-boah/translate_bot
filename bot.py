@@ -1,6 +1,6 @@
 from config import dp, bot
 from aiogram.types import Message, ContentType, Document, InputFile
-from handlers.control_panel import SingleControl
+from handlers.control_panel import MessageControl
 from loguru import logger
 from filters.filter import user_is_admin
 from update_airtable import update
@@ -13,5 +13,5 @@ from photo_handler import handle_albums
 async def start(message: Message):
     logger.info(message)
 
-    control = SingleControl(message)
+    control = MessageControl(message)
     await control.send_message()

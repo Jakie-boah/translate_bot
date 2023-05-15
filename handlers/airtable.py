@@ -49,10 +49,11 @@ class AirtableParser:
         # AirtableParser.validate_on_themes(row)
         themes = row
         theme_field = themes.split(', ')
-        translate_dict = {}
+        translate_dict = []
         for lan_con in theme_field:
-            lan_row = lan_con.split('-')
-            translate_dict[lan_row[1]] = lan_row[0]
+            translate_dict.append(lan_con)
+            # lan_row = lan_con.split('-')
+            # translate_dict[lan_row[1]] = lan_row[0]
 
         return translate_dict
 
