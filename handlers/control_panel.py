@@ -17,6 +17,7 @@ class MessageControl(SetUp):
         super().__init__(message)
 
     async def send_message(self):
+        self.translate_dict = self.message.chat.id
         self.determine_language = self.message.text
         logger.info(self.determine_language)
         msg = ''

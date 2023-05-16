@@ -14,11 +14,11 @@ DetectorFactory.seed = 0
 class SetUp:
     def __init__(self, message):
         self.message = message
-        self.translate_dict = [
-            'RU',
-            'EN',
-            'FR'
-        ]
+        # self.translate_dict = [
+        #     'RU',
+        #     'EN',
+        #     'FR'
+        # ]
 
 
     @property
@@ -29,13 +29,14 @@ class SetUp:
     def determine_language(self, val):
         self._language = detect(f'{val}').upper()
 
-    # @property
-    # def translate_dict(self) -> dict:
-    #     return self._translate_dict
-    #
-    # @translate_dict.setter
-    # def translate_dict(self, val):
-    #     self._translate_dict = AirtableParser(val).get_dict()
+    @property
+    def translate_dict(self) -> dict:
+        return self._translate_dict
+
+    @translate_dict.setter
+    def translate_dict(self, val):
+        self._translate_dict = AirtableParser(val).get_dict()
+
     async def _translate(self, language, message, msg=''):
         logger.info(self.message.text)
         response = await translate(language, message)

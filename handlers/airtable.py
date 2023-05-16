@@ -64,6 +64,6 @@ class AirtableParser:
         except KeyError:
             raise KeyError('Клетка Themes не заполнена')
 #
-#
+
 # a = (AirtableParser(-1001728616773).get_dict())
 # print(a)
