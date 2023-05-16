@@ -35,7 +35,8 @@ class MessageControl(SetUp):
             await bot.delete_message(chat_id=p.chat.id, message_id=p.message_id)
             await bot.send_message(self.message.chat.id,
                                    text=msg,
-                                   reply_to_message_id=self.message.message_id
+                                   reply_to_message_id=self.message.message_id,
+                                   disable_web_page_preview=True
                                    )
 
     async def _translate(self, language, message, msg=''):
