@@ -11,4 +11,4 @@ if __name__ == '__main__':
 
     logger.info("Бот запущен ветка new_version")
     # dp.start_polling(bot)
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp)
