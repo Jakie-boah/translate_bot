@@ -1,7 +1,5 @@
 
 from aiogram.utils import executor
-from loguru import logger
-from config import dp, bot
 from bot import *
 
 from handlers.album_handler import AlbumMiddleware

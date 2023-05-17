@@ -50,3 +50,10 @@ class SetUp:
         #         # translated_message += '\n' + url
         #         # logger.info(self.message.url)
         return translated_message
+
+    def set_active_languages(self) -> bool:
+        if self.determine_language in self.translate_dict:
+            self.translate_dict.remove(self.determine_language)
+            return True
+        else:
+            return False

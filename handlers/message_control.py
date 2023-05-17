@@ -3,12 +3,7 @@
 from translate import translate
 from config import bot
 from loguru import logger
-from aiogram.utils.markdown import hlink
-from aiogram import types
-from aiogram.utils.exceptions import MessageCantBeDeleted, BadRequest
-from urllib.parse import urlparse, parse_qs
-from .airtable import AirtableParser
-from .common_class import SetUp
+from .setup import SetUp
 
 
 class MessageControl(SetUp):
@@ -26,7 +21,7 @@ class MessageControl(SetUp):
             m = ','.join(self.translate_dict)
             p = await bot.send_message(self.message.chat.id,
                                        text=f'Message will be translated in <b>{m}</b>',
-                                       reply_to_message_id=self.message.message_id
+                                       reply_to_message_id=self.message.message_id,
                                        )
 
             for lang in self.translate_dict:
@@ -35,7 +30,8 @@ class MessageControl(SetUp):
             await bot.delete_message(chat_id=p.chat.id, message_id=p.message_id)
             await bot.send_message(self.message.chat.id,
                                    text=msg,
-                                   reply_to_message_id=self.message.message_id
+                                   reply_to_message_id=self.message.message_id,
+                                   disable_web_page_preview=True
                                    )
 
     async def _translate(self, language, message, msg=''):
@@ -53,9 +49,4 @@ class MessageControl(SetUp):
         #         # logger.info(self.message.url)
         return translated_message
 
-    def set_active_languages(self) -> bool:
-        if self.determine_language in self.translate_dict:
-            self.translate_dict.remove(self.determine_language)
-            return True
-        else:
-            return False
+
