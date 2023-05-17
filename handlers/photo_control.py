@@ -14,7 +14,6 @@ class PhotoControl(SetUp):
         self.translate_dict = self.message.chat.id
         self.determine_language = self.message.caption
         logger.info(self.determine_language)
-        self.translate_dict.remove(self.determine_language)
         if self.set_active_languages():
             m = ','.join(self.translate_dict)
             p = await bot.send_message(self.message.chat.id,
