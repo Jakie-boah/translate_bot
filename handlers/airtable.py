@@ -49,11 +49,10 @@ class AirtableParser:
         # AirtableParser.validate_on_themes(row)
         themes = row
         theme_field = themes.split(', ')
-        translate_dict = []
+        translate_dict = {}
         for lan_con in theme_field:
-            translate_dict.append(lan_con)
-            # lan_row = lan_con.split('-')
-            # translate_dict[lan_row[1]] = lan_row[0]
+            # translate_dict.append(lan_con)
+            translate_dict[lan_con[:2]] = lan_con
 
         return translate_dict
 
@@ -64,6 +63,3 @@ class AirtableParser:
         except KeyError:
             raise KeyError('Клетка Themes не заполнена')
 #
-
-# a = (AirtableParser(-1001728616773).get_dict())
-# print(a)

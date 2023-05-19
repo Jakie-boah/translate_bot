@@ -14,11 +14,11 @@ DetectorFactory.seed = 0
 class SetUp:
     def __init__(self, message):
         self.message = message
-        # self.translate_dict = [
-        #     'RU',
-        #     'EN',
-        #     'FR'
-        # ]
+        # self.translate_dict = {
+        #     'RU': 'RUSSIAN',
+        #     'EN': 'ENGLISH',
+        #     'FR': 'FRENCH'
+        # }
 
 
     @property
@@ -38,22 +38,36 @@ class SetUp:
         self._translate_dict = AirtableParser(val).get_dict()
 
     async def _translate(self, language, message, msg=''):
-        logger.info(self.message.text)
+        logger.info(self.message.reply_to_message.text)
         response = await translate(language, message)
         response = response['choices'][0]['text'].split('\n')
 
-        translated_message = f'<b>{self.message.from_user.first_name}</b>\n'
+        translated_message = str()
         for i in response:
             translated_message += i
+        translated_message += f'\n<b>{language}</b>'
 
-        # url = hlink(f'Original{msg} {self.determine_language[:2].upper()}', self.message.url)
-        #         # translated_message += '\n' + url
-        #         # logger.info(self.message.url)
         return translated_message
 
     def set_active_languages(self) -> bool:
         if self.determine_language in self.translate_dict:
-            self.translate_dict.remove(self.determine_language)
+            del self.translate_dict[self.determine_language]
+            return True
+        else:
+            return False
+
+
+class AcceptableLength(SetUp):
+    def __init__(self, message):
+        super().__init__(message)
+
+    def active_language(self):
+        self.translate_dict = self.message.chat.id
+        self.determine_language = self.message.text
+        return self.existed_language()
+
+    def existed_language(self):
+        if self.determine_language in self.translate_dict:
             return True
         else:
             return False
